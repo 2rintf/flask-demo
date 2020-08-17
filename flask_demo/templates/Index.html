@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../static/index.css?v=0.2.0">
+    <title>Search for Models</title>
+</head>
+<body>
+<h1>Search For Models</h1>
+<div>
+    <div class="container">
+        <div class="section">
+            <h3 class="func_name">Input</h3>
+            <div class="canvas_wrapper" style="max-height: 400px;height: auto;padding: 10px;text-align: center;">
+                <canvas id="select_pic_canvas" width="311" height="311">
+
+                </canvas>
+            </div>
+
+            <div>
+                <form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+                    <label class="btn" for=select_pic>Choose..</label>
+                    <input id="select_pic" type="file" name="file" accept=".png,.jpg,.jpeg"
+                           onchange="show_selectedImage()">
+                    {#                ! JS还没检查#}
+                    <script type="text/javascript">
+                        function show_selectedImage() {
+                            /// get select files.
+                            var selected_files = document.getElementById("select_pic").files;
+                            for (var file of selected_files) {
+                                console.log(file.webkitRelativePath);
+                                /// read file content.
+                                var reader = new FileReader();
+                                reader.readAsDataURL(file);
+                                reader.onloadend = function () {
+                                    /// deal data.
+                                    var img = new Image();
+                                    /// after loader, result storage the file content result.
+                                    img.src = this.result;
+                                    img.onload = function () {
+                                        var canvas = document.getElementById("select_pic_canvas");
+                                        var cxt = canvas.getContext('2d');
+                                        cxt.drawImage(img, 0, 0);
+                                    }
+                                }
+                            }
+                        }
+                    </script>
+                    <div>
+                        <input type="submit" class="btn" value="Submit"/>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="section">
+            <h3 class="func_name">Setting</h3>
+            <div class="container">
+                <div class="setting">
+                    <h4 class="setting_name">推荐系统运行模式</h4>
+                    <form class="setting_form" style="text-align: match-parent">
+                        <input type="radio" name="search_mode" value=1>人脸相似
+                        <input type="radio" name="search_mode" value=2>人脸语义相似
+                        <input type="radio" name="search_mode" value=3>综合Mode
+                    </form>
+                </div>
+                <div class="setting">
+                    <h4 class="setting_name">返回结果个数</h4>
+                    <form class="setting_form" style="text-align: match-parent">
+                        <input type="radio" name="return_num" value=1>1
+                        <input type="radio" name="return_num" value=3>3
+                        <input type="radio" name="return_num" value=5>5
+                    </form>
+                </div>
+            </div>
+            <div class="container">
+                <div class="setting">
+                    <h4 class="setting_name">预留设置卡片</h4>
+                    <form class="setting_form" style="text-align: match-parent">
+                        <input type="radio" name="no" value=1>NULL
+                        <input type="radio" name="no" value=3>NULL
+                        <input type="radio" name="no" value=5>NULL
+                    </form>
+                </div>
+                <div class="setting">
+                    <h4 class="setting_name">预留设置卡片</h4>
+                    <form class="setting_form" style="text-align: match-parent">
+                        <input type="radio" name="no" value=1>NULL
+                        <input type="radio" name="no" value=3>NULL
+                        <input type="radio" name="no" value=5>NULL
+                    </form>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div class="result">
+        <div class="section">
+            <h3 class="func_name">Output</h3>
+        </div>
+    </div>
+    <div class="result">
+
+        <div class="section">
+            <div class="top-5">
+                <canvas class="show_result_canvas">
+
+                </canvas>
+                <div class="section">
+                    <div class="info">
+                        <h3>Name:</h3>
+                        <h3>Sex:</h3>
+                        <h3>E-mail:</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="top-5">
+                <canvas class="show_result_canvas">
+
+                </canvas>
+                <div class="section">
+                    <div class="info">
+                        <h3>Name:</h3>
+                        <h3>Sex:</h3>
+                        <h3>E-mail:</h3>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="top-5">
+                <canvas class="show_result_canvas">
+
+                </canvas>
+                <div class="section">
+                    <div class="info">
+                        <h3>Name:</h3>
+                        <h3>Sex:</h3>
+                        <h3>E-mail:</h3>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="result">
+        <div class="section">
+            <div class="top-5">
+                <canvas class="show_result_canvas">
+
+                </canvas>
+                <div class="section">
+                    <div class="info">
+                        <h3>Name:</h3>
+                        <h3>Sex:</h3>
+                        <h3>E-mail:</h3>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="top-5">
+                <canvas class="show_result_canvas">
+
+                </canvas>
+                <div class="section">
+                    <div class="info">
+                        <h3>Name:</h3>
+                        <h3>Sex:</h3>
+                        <h3>E-mail:</h3>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <div class="top-5">
+                <canvas class="show_result_canvas">
+
+                </canvas>
+                <div class="section">
+                    <div class="info">
+                        <h3>Name:</h3>
+                        <h3>Sex:</h3>
+                        <h3>E-mail:</h3>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {#        <div class="result-container">#}
+        {#            <div class="hint">#}
+        {#                {% if flag==0 %}#}
+        {#                    Your result will be shown here.#}
+        {#                {% elif flag %}#}
+        {#                    {{ result }}#}
+        {#                {% endif %}#}
+        {##}
+        {#            </div> <!---->#}
+        {#        </div>#}
+
+    </div>
+
+</div>
+
+<footer>Made By CZD</footer>
+
+</body>
+</html>

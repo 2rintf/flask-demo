@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>show results</title>
+</head>
+<body>
+<p>
+    {% if data %}
+        {% for i,v in data.items() %}
+        <h2>{{ i }}  {{ v }}</h2>
+        {% endfor %}
+    {% else %}
+        <h2>data is null</h2>
+    {% endif %}
+
+</p>
+</body>
+</html>
