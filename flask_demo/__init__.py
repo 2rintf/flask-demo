@@ -1,5 +1,5 @@
 from flask import Flask
-from flask import request,render_template,jsonify,abort,redirect,url_for
+from flask import Response,request,render_template,jsonify,abort,redirect,url_for,send_file
 from config import config
 
 # import flask_sqlalchemy
@@ -8,7 +8,10 @@ from flask_sqlalchemy import BaseQuery
 
 import os
 import time
-import json
+import io
+import base64
+from PIL import Image
+
 
 # app创建，建议后面优化时写成一个函数，返回创建的app实例
 
@@ -65,11 +68,25 @@ def index():
     if request.method == 'GET':
         return render_template('Index.html', flag = 0)
     elif request.method == 'POST':
-        print("fuck")
         fp = request.files.get('file')
-        fp.save("test.jpg")
-        print("success")
-        return render_template('Index.html' ,flag = 1, result='info from backend')
+        # fp.save("flask_demo/static/upload_img/upload.jpg")
+        print(type(fp))
+        img = fp.read()
+        print(str(img,'utf-8'))
+
+        print("------------------------")
+        byte_stream = io.BytesIO(img)
+        print(byte_stream)
+
+        im_pil = Image.open(byte_stream)
+        im_pil.save("pil_save.jpg")
+
+        # rtn_test = open("flask_demo/static/upload_img/test.jpg")
+        # todo:尝试把图片送给前端  file_path or image_stream?
+
+        return render_template('Index.html' ,flag = 1,
+                               result='info from backend',
+                               img_rtn=base64.b64encode(img).decode('utf-8'))
 
 
 @app.route('/hello',methods=['GET','POST'])

@@ -15,6 +15,9 @@
                 <canvas id="select_pic_canvas" width="311" height="311">
 
                 </canvas>
+                {% if flag %}
+                <img style="width: 200px" src="data:;base64,{{ img_rtn }}">
+                {% endif %}
             </div>
 
             <div>
