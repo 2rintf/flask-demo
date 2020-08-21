@@ -23,27 +23,27 @@ import PIL.Image as Image
 # import matplotlib.pyplot as plt
 
 device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
-dict_haircolor = {0: "black hair",
-                  1: "blond hair",
-                  2: "brown hair",
-                  3: "gray hair"}
-dict_haircut = {0: "bald",
-                1: "bangs",
-                2: "recending hairline",
-                3: "straight hair",
-                4: "wavy hair"}
-dict_sex = {0: "female",
-            1: "male"}
-dict_beard = {0: "goatee",
-              1: "mustache",
-              2: "no_beard"}
-dict_skin = {0: "no pale skin",
-             1: "pale skin"}
-dict_eyes = {0: "arched eyebrows",
-             1: "bags under eyes",
-             2: "bushy eyebrows",
-             3: "eye glasses",
-             4: "narrow eyes"}
+dict_haircolor = {0: "黑色头发",
+                  1: "金色头发",
+                  2: "棕色头发",
+                  3: "灰色头发"}
+dict_haircut = {0: "秃头",
+                1: "刘海",
+                2: "渐退发际线",
+                3: "直发",
+                4: "卷发"}
+dict_sex = {0: "女",
+            1: "男"}
+dict_beard = {0: "山羊胡",
+              1: "胡子",
+              2: "无胡子"}
+dict_skin = {0: "非白皙皮肤",
+             1: "白皙皮肤"}
+dict_eyes = {0: "柳叶眉",
+             1: "眼袋",
+             2: "浓眉",
+             3: "戴眼镜",
+             4: "窄眼"}
 
 dict_list = [dict_haircolor, dict_haircut, dict_sex, dict_beard, dict_skin, dict_eyes]
 

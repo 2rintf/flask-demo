@@ -106,14 +106,21 @@
     </div>
     <div class="result-container">
         <div class="hint">
+        <table >
+        <tr>
             {% if flag==0 %}
                 Your result will be shown here.
             {% elif flag %}
                 {% for i in attr_result.keys() %}
-                <h4>{{ attr_result[i] }}</h4><br>
+                <td>{{ attr_result[i] }} |</td>
                 {% endfor %}
 
             {% endif %}
+        </tr>
+
+
+        </table>
+
 
         </div> <!---->
     </div>

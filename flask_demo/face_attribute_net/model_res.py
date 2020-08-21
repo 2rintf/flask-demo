@@ -112,7 +112,7 @@ class AttrPre(nn.Module):
         super(AttrPre, self).__init__()
         self.FeatureExtraction = FeatureExtraction()
         # 预训练权重
-        init_pretrained_weights(self.FeatureExtraction, model_urls['resnet18'])
+        # init_pretrained_weights(self.FeatureExtraction, model_urls['resnet18'])
         output_dim = 1
         self.classifier = Classifier(output_dim)
 
