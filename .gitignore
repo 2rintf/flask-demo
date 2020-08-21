@@ -105,3 +105,5 @@ venv.bak/
 
 # checkpoints
 checkpoints/
+
+flask_demo/face_attribute/test.pth

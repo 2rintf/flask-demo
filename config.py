@@ -30,6 +30,7 @@ class ProductionConfig(Config):  # 继承config基类
 class DevelopmentConfig(Config):
     ##开发人员使用的Config
     # DEBUG = True
+    IS_FA_NET_USED = False
     SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://%s:%s@%s/%s?charset=utf8mb4' % (
     MYSQL_USER, MYSQL_PWD, MYSQL_HOST, MYSQL_DB)
     # SECRET_KEY = 'This is my key'

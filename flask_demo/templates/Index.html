@@ -4,149 +4,156 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../static/index.css?v=0.2.0">
     <title>Search for Models</title>
+    <script src="../static/show_rawImg.js"></script>
+    <script src="../static/form_func.js"></script>
+    <script src="../static/show_selectedImg.js"></script>
 </head>
-<body>
+
+<body onload="setImage({{ flag }},'{{ img_rtn }}')">
 <h1>Search For Models</h1>
 <div>
-    <div class="container">
-        <div class="section">
-            <h3 class="func_name">Input</h3>
-            <div class="canvas_wrapper" style="max-height: 400px;height: auto;padding: 10px;text-align: center;">
-                <canvas id="select_pic_canvas" width="311" height="311">
-
-                </canvas>
-                {% if flag %}
-                <img style="width: 200px" src="data:;base64,{{ img_rtn }}">
-                {% endif %}
-            </div>
-
-            <div>
-                <form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+    <form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">
+        <div class="container">
+            <div class="section">
+                <h3 class="func_name">Input</h3>
+                <div class="canvas_wrapper" style="max-height: 400px;height: auto;padding: 10px;text-align: center;">
+                    <canvas id="select_pic_canvas" width="400px" height="400px">
+                    </canvas>
+                    {#                <button type="button" value="click" onclick="setImage()"></button>#}
+                    {#                 <img style="width: 400px" src="data:;base64,{{ img_model }}">#}
+                </div>
+                <div>
+                    {#                <form method="post" enctype="multipart/form-data" action="{{ url_for('upload') }}">#}
                     <label class="btn" for=select_pic>Choose..</label>
                     <input id="select_pic" type="file" name="file" accept=".png,.jpg,.jpeg"
-                           onchange="show_selectedImage()">
-                    {#                ! JS还没检查#}
-                    <script type="text/javascript">
-                        function show_selectedImage() {
-                            /// get select files.
-                            var selected_files = document.getElementById("select_pic").files;
-                            for (var file of selected_files) {
-                                console.log(file.webkitRelativePath);
-                                /// read file content.
-                                var reader = new FileReader();
-                                reader.readAsDataURL(file);
-                                reader.onloadend = function () {
-                                    /// deal data.
-                                    var img = new Image();
-                                    /// after loader, result storage the file content result.
-                                    img.src = this.result;
-                                    img.onload = function () {
-                                        var canvas = document.getElementById("select_pic_canvas");
-                                        var cxt = canvas.getContext('2d');
-                                        cxt.drawImage(img, 0, 0);
-                                    }
-                                }
-                            }
-                        }
-                    </script>
-                    <div>
-                        <input type="submit" class="btn" value="Submit"/>
-                    </div>
-                </form>
-            </div>
-
-        </div>
-        <div class="section">
-            <h3 class="func_name">Setting</h3>
-            <div class="container">
-                <div class="setting">
-                    <h4 class="setting_name">推荐系统运行模式</h4>
-                    <form class="setting_form" style="text-align: match-parent">
-                        <input type="radio" name="search_mode" value=1>人脸相似
-                        <input type="radio" name="search_mode" value=2>人脸语义相似
-                        <input type="radio" name="search_mode" value=3>综合Mode
-                    </form>
+                           onchange="show_selectedImage(); check_submit()">
+                    {#                </form>#}
                 </div>
-                <div class="setting">
-                    <h4 class="setting_name">返回结果个数</h4>
-                    <form class="setting_form" style="text-align: match-parent">
+
+            </div>
+            <div class="section">
+                <h3 class="func_name">Setting</h3>
+                <div class="container">
+                    <div class="setting">
+                        <h4 class="setting_name">推荐系统运行模式</h4>
+                        {#                    <form enctype="multipart/form-data" action="{{ url_for('upload') }}"#}
+                        {#                          id="form_1" class="setting_form" style="text-align: match-parent">#}
+                        <input type="radio" name="search_mode" value=1>人脸相似
+                        <input type="radio" name="search_mode" value=2 checked>人脸语义相似
+                        <input type="radio" name="search_mode" value=3>综合Mode
+                        {#                    </form>#}
+                    </div>
+                    <div class="setting">
+                        <h4 class="setting_name">返回结果个数</h4>
+                        {#                    <form enctype="multipart/form-data" action="{{ url_for('upload') }}"#}
+                        {#                          id="form_2" class="setting_form" style="text-align: match-parent">#}
                         <input type="radio" name="return_num" value=1>1
                         <input type="radio" name="return_num" value=3>3
-                        <input type="radio" name="return_num" value=5>5
-                    </form>
+                        <input type="radio" name="return_num" value=5 checked>5
+                        {#                    </form>#}
+                    </div>
                 </div>
-            </div>
-            <div class="container">
-                <div class="setting">
-                    <h4 class="setting_name">预留设置卡片</h4>
-                    <form class="setting_form" style="text-align: match-parent">
+
+                <div class="container">
+                    <div class="setting">
+                        <h4 class="setting_name">预留设置卡片</h4>
+                        {#                    <form id="from_3" class="setting_form" style="text-align: match-parent">#}
                         <input type="radio" name="no" value=1>NULL
                         <input type="radio" name="no" value=3>NULL
                         <input type="radio" name="no" value=5>NULL
-                    </form>
-                </div>
-                <div class="setting">
-                    <h4 class="setting_name">预留设置卡片</h4>
-                    <form class="setting_form" style="text-align: match-parent">
+                        {#                    </form>#}
+                    </div>
+                    <div class="setting">
+                        <h4 class="setting_name">预留设置卡片</h4>
+                        {#                    <form id="form_4" class="setting_form" style="text-align: match-parent">#}
                         <input type="radio" name="no" value=1>NULL
                         <input type="radio" name="no" value=3>NULL
                         <input type="radio" name="no" value=5>NULL
-                    </form>
+                        {#                    </form>#}
+                    </div>
+                </div>
+
+
+                <div class="">
+                    <div align="center">
+                        <input id="submit_btn" type="submit" class="btn" value="Submit" disabled="disabled"/>
+                        <script type="text/javascript">
+                            function check_submit() {
+                                if (document.getElementById("select_pic").files == null){
+                                    document.getElementById("submit_btn").disabled = true;
+                                    console.log("file null")
+                                }
+                                else {
+                                    console.log("file got.")
+                                    document.getElementById("submit_btn").disabled=false;
+                                }
+
+                            }
+                        </script>
+                        {#                    <input type="button" class="btn" value="Submit" onclick="submit_func()">#}
+                    </div>
                 </div>
             </div>
+
 
         </div>
+    </form>
 
-    </div>
     <div class="result">
         <div class="section">
             <h3 class="func_name">Output</h3>
         </div>
     </div>
+    <div class="result-container">
+        <div class="hint">
+            {% if flag==0 %}
+                Your result will be shown here.
+            {% elif flag %}
+                {% for i in attr_result.keys() %}
+                <h4>{{ attr_result[i] }}</h4><br>
+                {% endfor %}
+
+            {% endif %}
+
+        </div> <!---->
+    </div>
     <div class="result">
 
         <div class="section">
             <div class="top-5">
-                <canvas class="show_result_canvas">
+                <canvas class="show_result_canvas" id="no1">
 
                 </canvas>
                 <div class="section">
                     <div class="info">
-                        <h3>Name:</h3>
-                        <h3>Sex:</h3>
-                        <h3>E-mail:</h3>
+                        <h3 class="h3_info">Name:</h3>
+                        <h3 class="h3_info">E-mail:</h3>
                     </div>
                 </div>
             </div>
         </div>
         <div class="section">
             <div class="top-5">
-                <canvas class="show_result_canvas">
+                <canvas class="show_result_canvas" id="no2">
 
                 </canvas>
                 <div class="section">
                     <div class="info">
-                        <h3>Name:</h3>
-                        <h3>Sex:</h3>
-                        <h3>E-mail:</h3>
-
-
+                        <h3 class="h3_info">Name:</h3>
+                        <h3 class="h3_info">E-mail:</h3>
                     </div>
                 </div>
             </div>
         </div>
         <div class="section">
             <div class="top-5">
-                <canvas class="show_result_canvas">
+                <canvas class="show_result_canvas" id="no3">
 
                 </canvas>
                 <div class="section">
                     <div class="info">
-                        <h3>Name:</h3>
-                        <h3>Sex:</h3>
-                        <h3>E-mail:</h3>
-
-
+                        <h3 class="h3_info">Name:</h3>
+                        <h3 class="h3_info">E-mail:</h3>
                     </div>
                 </div>
             </div>
@@ -155,63 +162,44 @@
     <div class="result">
         <div class="section">
             <div class="top-5">
-                <canvas class="show_result_canvas">
+                <canvas class="show_result_canvas" id="no4">
 
                 </canvas>
                 <div class="section">
                     <div class="info">
-                        <h3>Name:</h3>
-                        <h3>Sex:</h3>
-                        <h3>E-mail:</h3>
-
-
+                        <h3 class="h3_info">Name:</h3>
+                        <h3 class="h3_info">E-mail:</h3>
                     </div>
                 </div>
             </div>
         </div>
         <div class="section">
             <div class="top-5">
-                <canvas class="show_result_canvas">
+                <canvas class="show_result_canvas" id="no5">
 
                 </canvas>
                 <div class="section">
                     <div class="info">
-                        <h3>Name:</h3>
-                        <h3>Sex:</h3>
-                        <h3>E-mail:</h3>
-
-
+                        <h3 class="h3_info">Name:</h3>
+                        <h3 class="h3_info">E-mail:</h3>
                     </div>
                 </div>
             </div>
         </div>
         <div class="section">
             <div class="top-5">
-                <canvas class="show_result_canvas">
+                <canvas class="show_result_canvas" id="no6">
 
                 </canvas>
                 <div class="section">
                     <div class="info">
-                        <h3>Name:</h3>
-                        <h3>Sex:</h3>
-                        <h3>E-mail:</h3>
-
-
+                        <h3 class="h3_info">Name:</h3>
+                        <h3 class="h3_info">E-mail:</h3>
                     </div>
                 </div>
             </div>
         </div>
 
-        {#        <div class="result-container">#}
-        {#            <div class="hint">#}
-        {#                {% if flag==0 %}#}
-        {#                    Your result will be shown here.#}
-        {#                {% elif flag %}#}
-        {#                    {{ result }}#}
-        {#                {% endif %}#}
-        {##}
-        {#            </div> <!---->#}
-        {#        </div>#}
 
     </div>
 
