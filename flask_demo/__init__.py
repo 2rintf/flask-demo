@@ -21,7 +21,7 @@ app.config.from_object(config['development'])
 
 db = SQLAlchemy(app)
 
-from flask_demo.models import ModelInfo
+from flask_demo.models import ModelInfo,EncodingTable
 
 name = ModelInfo.query.filter_by(name='pbt')
 # get num of SELECT result.
@@ -45,7 +45,7 @@ test_user = {'name': 'test_user',
 # 创建实例结束
 
 
-app.config['IS_FA_NET_USED'] = True
+# app.config['IS_FA_NET_USED'] = True
 
 if app.config['IS_FA_NET_USED']:
     try:
@@ -107,6 +107,14 @@ def net_try():
                              pic_path="/home/czd-2019/Projects/face-attribute-prediction/self_network/model_pic_test/0001.jpg")
 
     return jsonify(final_result)
+
+@app.route('/db_test',methods=['GET', 'POST'])
+def db_try():
+    result = EncodingTable.query.filter_by(id=1)
+    print(result.count())
+    encoding = result[0].encoding
+    print(encoding)
+    return  jsonify(encoding)
 
 
 def FA_detect_api(pic_path):

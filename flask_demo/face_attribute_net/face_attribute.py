@@ -64,6 +64,13 @@ def get_FA_model(weight_path):
 
 
 def FA_detect(model, pic_path, threshold=0.6):
+    '''
+
+    :param model:
+    :param pic_path:
+    :param threshold:
+    :return: final_result
+    '''
     with open(pic_path, 'rb') as f:
         img = Image.open(f)
         img = img.convert('RGB')
