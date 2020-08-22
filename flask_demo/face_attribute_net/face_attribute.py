@@ -103,6 +103,11 @@ def FA_detect(model, pic_path, threshold=0.6):
                 temp_result.append(pred_result)
         print(temp_result)
 
+        db_used_result = temp_result.copy()
+        print(db_used_result[0].cpu().numpy())
+
+
+
         need_process = [0, 0, 0, 0, 0, 0]
         for l in range(len(temp_result)):
             if 1 in temp_result[l]:
@@ -118,10 +123,15 @@ def FA_detect(model, pic_path, threshold=0.6):
             pred = np.argmax(output_s[w].cpu().numpy()[0])
             final_result[w] = dict_list[w][pred]
 
+            db_used_result[w].cpu().numpy()[pred] = 1
+
         for w in [i for i, x in enumerate(need_process) if x == 0]:
             # print(temp_result[w].cpu().numpy())
             pred = np.argmax(temp_result[w].cpu().numpy())
             final_result[w] = dict_list[w][pred]
+
+            db_used_result[w].cpu().numpy()[pred] = 1
+            
 
         for j in [2, 4]:
             if temp_result[j] == 1:
