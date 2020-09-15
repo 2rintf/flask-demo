@@ -7,12 +7,14 @@ import json
 
 from sshtunnel import SSHTunnelForwarder
 
+import face_recognition
+
 
 SSH_PWD = base64.b64decode("MTMwNzEzMDc=").decode()
 DB_PWD = MYSQL_PWD = base64.b64decode("MTIzNDU2").decode()
 
 with SSHTunnelForwarder(
-        ("10.128.6.193", 22),
+        ("192.168.1.200", 22),
         ssh_username="czd-2019",
         # ssh_pkey="/xxx/id_rsa",
         ssh_password=SSH_PWD,
@@ -28,11 +30,19 @@ with SSHTunnelForwarder(
     )
 
     cursor = conn.cursor()
-    cursor.execute("SELECT encoding FROM encoding_test_table where id = 1")
+    cursor.execute("SELECT encoding,id FROM encoding_table")
     # print(cursor.fetchall())
     result = cursor.fetchall()
-    encoding = result[0]
-    print(encoding)
-    encoding = json.loads(encoding[0])
+
+    print(len(result))
+    print(result[1])
+
+    encoding = result[0][0]
+
+# todo:测试一下face distance的效果
+
+
+    encoding = json.loads(encoding)
     print(len(encoding))
     print(type(encoding))
+    print(encoding)
