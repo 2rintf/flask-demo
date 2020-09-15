@@ -27,6 +27,7 @@ class EncodingTable(db.Model):
 class ModelInfo(db.Model):
     __tablename__ = 'model_info'
 
+    # todo:2020年9月14日14点35分 数据库model_info表添加了新的列值此处还未修改！
     id = db.Column(db.INTEGER, primary_key=True, unique=True)
     name = db.Column(db.String(45), nullable=False)
     sex = db.Column(db.BOOLEAN, nullable=False)

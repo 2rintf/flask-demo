@@ -21,18 +21,19 @@ app.config.from_object(config['development'])
 
 db = SQLAlchemy(app)
 
-from flask_demo.models import ModelInfo,EncodingTable
+from flask_demo.models_20200915 import ModelInfo,EncodingTable
 
-name = ModelInfo.query.filter_by(name='pbt')
-# get num of SELECT result.
-print(name.count())
+
+# name = ModelInfo.query.filter_by(name='pbt')
+# # get num of SELECT result.
+# print(name.count())
 
 # print(name.id)
 # print(name.pic_path)
 # print(name.sex)
 # print(name.black_hair)
 
-new_name = ModelInfo('pbt', 0, '/pic/pbt.jpg', 1)
+# new_name = ModelInfo('pbt', 0, '/pic/pbt.jpg', 1)
 # db.session.add(new_name)
 # db.session.commit()
 
@@ -56,9 +57,7 @@ if app.config['IS_FA_NET_USED']:
         FA_model=None
 else:
     FA_model = None
-
-test_data = {"czd": "123",
-             "pzc": "890"}
+    print("[WARNNING]: Face attribute net do not be selected!")
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -69,6 +68,7 @@ def page_not_found(e):
 def show_info(name):
     print(name)
     name_getted = request.form.get('username')
+
     return render_template('show_results.html', data=test_data)
 
 

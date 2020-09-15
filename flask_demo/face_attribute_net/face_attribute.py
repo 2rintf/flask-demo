@@ -131,7 +131,7 @@ def FA_detect(model, pic_path, threshold=0.6):
             final_result[w] = dict_list[w][pred]
 
             db_used_result[w].cpu().numpy()[pred] = 1
-            
+
 
         for j in [2, 4]:
             if temp_result[j] == 1:

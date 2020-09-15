@@ -6,6 +6,8 @@ import base64
 import json
 import time
 
+import numpy as np
+
 import os
 from sshtunnel import SSHTunnelForwarder
 
@@ -26,16 +28,19 @@ print(len(file_name))
 
 total_encodings = []
 total_name=[]
+total_pic_path=[]
+
+total_info = {}
 
 count = 0
 for fn in file_name:
     real_path = os.path.join(path,fn)
 
-    FA_result = FA_detect(model,real_path)
-    print(FA_result)
-    # todo: face attribute into DATABASE.
-
-    exit(0)
+    # FA_result = FA_detect(model,real_path)
+    # print(FA_result)
+    # # todo: face attribute into DATABASE.
+    #
+    # exit(0)
 
     image = face_recognition.load_image_file(real_path)
     face_locations = face_recognition.face_locations(image,model="cnn",number_of_times_to_upsample=1)
@@ -61,12 +66,12 @@ for fn in file_name:
             continue
         total_encodings.append(encoding[i].tolist())
         total_name.append(fn.replace('.jpg',''))
+        total_pic_path.append(real_path)
 
 
-exit(0)
 
 with SSHTunnelForwarder(
-        ("10.128.6.193", 22),
+        ("192.168.1.200", 22),
         ssh_username="czd-2019",
         # ssh_pkey="/xxx/id_rsa",
         ssh_password=SSH_PWD,
@@ -83,14 +88,14 @@ with SSHTunnelForwarder(
     cursor = conn.cursor()
 
 
-    for n,e in zip(total_name,total_encodings):
+    for [n,e],p in zip(list(zip(total_name,total_encodings)),total_pic_path):
         e_json = json.dumps(e)
 
         t1 = time.time()
         sql = """
-        INSERT INTO encoding_table (NAME,ENCODING) VALUES(%s,%s)
+        INSERT INTO encoding_table (NAME,ENCODING,pic_path) VALUES(%s,%s,%s)
         """
-        cursor.execute(sql, (n, e_json))
+        cursor.execute(sql, (n, e_json, p))
         conn.commit()
         t2 = time.time()
         print("cost:{%.3f}"%(t2-t1))
