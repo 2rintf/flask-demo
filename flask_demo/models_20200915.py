@@ -17,6 +17,19 @@ class EncodingTable(db.Model):
     encoding = db.Column(db.JSON, nullable=False)
     attr_encoding = db.Column(db.JSON, nullable=False)
 
+    def get_dict(self):
+        '''
+        获得包含所有属性值的dict
+        :return: dict
+        '''
+        return {
+            'name':self.name,
+            'id':self.id,
+            'pic_path': self.pic_path,
+            'encoding': self.encoding,
+            'attr_encoding': self.attr_encoding
+        }
+
 
 
 class ModelInfo(db.Model):

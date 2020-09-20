@@ -8,7 +8,6 @@
     <script src="../static/form_func.js"></script>
     <script src="../static/show_selectedImg.js"></script>
 </head>
-
 <body onload="setImage({{ flag }},'{{ img_rtn }}')">
 <h1>Search For Models</h1>
 <div>
@@ -38,8 +37,9 @@
                         <h4 class="setting_name">推荐系统运行模式</h4>
                         {#                    <form enctype="multipart/form-data" action="{{ url_for('upload') }}"#}
                         {#                          id="form_1" class="setting_form" style="text-align: match-parent">#}
-                        <input type="radio" name="search_mode" value=1>人脸相似
-                        <input type="radio" name="search_mode" value=2 checked>人脸语义相似
+                        <input type="radio" id="radio_test" name="search_mode" value=1 checked>
+                        <label for="radio_test">人脸相似</label>
+                        <input type="radio" name="search_mode" value=2 >人脸语义相似
                         <input type="radio" name="search_mode" value=3>综合Mode
                         {#                    </form>#}
                     </div>
@@ -48,8 +48,8 @@
                         {#                    <form enctype="multipart/form-data" action="{{ url_for('upload') }}"#}
                         {#                          id="form_2" class="setting_form" style="text-align: match-parent">#}
                         <input type="radio" name="return_num" value=1>1
-                        <input type="radio" name="return_num" value=3>3
-                        <input type="radio" name="return_num" value=5 checked>5
+                        <input type="radio" name="return_num" value=4>4
+                        <input type="radio" name="return_num" value=6 checked>6
                         {#                    </form>#}
                     </div>
                 </div>
@@ -79,13 +79,12 @@
                         <input id="submit_btn" type="submit" class="btn" value="Submit" disabled="disabled"/>
                         <script type="text/javascript">
                             function check_submit() {
-                                if (document.getElementById("select_pic").files == null){
+                                if (document.getElementById("select_pic").files == null) {
                                     document.getElementById("submit_btn").disabled = true;
                                     console.log("file null")
-                                }
-                                else {
+                                } else {
                                     console.log("file got.")
-                                    document.getElementById("submit_btn").disabled=false;
+                                    document.getElementById("submit_btn").disabled = false;
                                 }
 
                             }
@@ -104,114 +103,137 @@
             <h3 class="func_name">Output</h3>
         </div>
     </div>
-    <div class="result-container">
-        <div class="hint">
-        <table >
-        <tr>
-            {% if flag==0 %}
-                Your result will be shown here.
-            {% elif flag %}
-                {% for i in attr_result.keys() %}
-                <td>{{ attr_result[i] }} |</td>
-                {% endfor %}
 
-            {% endif %}
-        </tr>
-
-
-        </table>
-
-
-        </div> <!---->
-    </div>
     <div class="result">
+        {% set isHidden = "" %}
+        {% if flag == 1 %}
+            {% set isHidden = "hidden=\"hidden\"" %}
+        {% endif %}
+        {% for i in range(6) %}
+            <div class="result_section">
+                <div class="top-5">
+                    <canvas class="show_result_canvas" id="no1" {{ isHidden }}>
+                    </canvas>
+                    {% if flag==1 %}
+                    <img width="220px" height="100%" src="data:;base64,{{ top6ModelsInfo[i]['img_stream'] }}">
+                    {% endif %}
 
-        <div class="section">
-            <div class="top-5">
-                <canvas class="show_result_canvas" id="no1">
-
-                </canvas>
-                <div class="section">
                     <div class="info">
                         <h3 class="h3_info">Name:</h3>
                         <h3 class="h3_info">E-mail:</h3>
                     </div>
                 </div>
             </div>
-        </div>
-        <div class="section">
-            <div class="top-5">
-                <canvas class="show_result_canvas" id="no2">
-
-                </canvas>
-                <div class="section">
-                    <div class="info">
-                        <h3 class="h3_info">Name:</h3>
-                        <h3 class="h3_info">E-mail:</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="top-5">
-                <canvas class="show_result_canvas" id="no3">
-
-                </canvas>
-                <div class="section">
-                    <div class="info">
-                        <h3 class="h3_info">Name:</h3>
-                        <h3 class="h3_info">E-mail:</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
+        {% endfor %}
     </div>
-    <div class="result">
-        <div class="section">
-            <div class="top-5">
-                <canvas class="show_result_canvas" id="no4">
 
-                </canvas>
-                <div class="section">
-                    <div class="info">
-                        <h3 class="h3_info">Name:</h3>
-                        <h3 class="h3_info">E-mail:</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="top-5">
-                <canvas class="show_result_canvas" id="no5">
+    {#    <div class="result-container">#}
+    {#        <div class="hint">#}
+    {#        <table >#}
+    {#        <tr>#}
+    {#            {% if flag==0 %}#}
+    {#                Your result will be shown here.#}
+    {#            {% elif flag %}#}
+    {#                {% for i in attr_result.keys() %}#}
+    {#                <td>{{ attr_result[i] }} |</td>#}
+    {#                {% endfor %}#}
+    {##}
+    {#            {% endif %}#}
+    {#        </tr>#}
+    {##}
+    {##}
+    {#        </table>#}
+    {##}
+    {##}
+    {#        </div> <!---->#}
+    {#    </div>#}
+    {#    <div class="result">#}
+    {##}
+    {#        <div class="section">#}
+    {#            <div class="top-5">#}
+    {#                <canvas class="show_result_canvas" id="no1">#}
+    {##}
+    {#                </canvas>#}
+    {#                <div class="section">#}
+    {#                    <div class="info">#}
+    {#                        <h3 class="h3_info">Name:</h3>#}
+    {#                        <h3 class="h3_info">E-mail:</h3>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="section">#}
+    {#            <div class="top-5">#}
+    {#                <canvas class="show_result_canvas" id="no2">#}
+    {##}
+    {#                </canvas>#}
+    {#                <div class="section">#}
+    {#                    <div class="info">#}
+    {#                        <h3 class="h3_info">Name:</h3>#}
+    {#                        <h3 class="h3_info">E-mail:</h3>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="section">#}
+    {#            <div class="top-5">#}
+    {#                <canvas class="show_result_canvas" id="no3">#}
+    {##}
+    {#                </canvas>#}
+    {#                <div class="section">#}
+    {#                    <div class="info">#}
+    {#                        <h3 class="h3_info">Name:</h3>#}
+    {#                        <h3 class="h3_info">E-mail:</h3>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#    </div>#}
+    {#    <div class="result">#}
+    {#        <div class="section">#}
+    {#            <div class="top-5">#}
+    {#                <canvas class="show_result_canvas" id="no4">#}
+    {##}
+    {#                </canvas>#}
+    {#                <div class="section">#}
+    {#                    <div class="info">#}
+    {#                        <h3 class="h3_info">Name:</h3>#}
+    {#                        <h3 class="h3_info">E-mail:</h3>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="section">#}
+    {#            <div class="top-5">#}
+    {#                <canvas class="show_result_canvas" id="no5">#}
+    {##}
+    {#                </canvas>#}
+    {#                <div class="section">#}
+    {#                    <div class="info">#}
+    {#                        <h3 class="h3_info">Name:</h3>#}
+    {#                        <h3 class="h3_info">E-mail:</h3>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
+    {#        <div class="section">#}
+    {#            <div class="top-5">#}
+    {#                <canvas class="show_result_canvas" id="no6">#}
+    {##}
+    {#                </canvas>#}
+    {#                <div class="section">#}
+    {#                    <div class="info">#}
+    {#                        <h3 class="h3_info">Name:</h3>#}
+    {#                        <h3 class="h3_info">E-mail:</h3>#}
+    {#                    </div>#}
+    {#                </div>#}
+    {#            </div>#}
+    {#        </div>#}
 
-                </canvas>
-                <div class="section">
-                    <div class="info">
-                        <h3 class="h3_info">Name:</h3>
-                        <h3 class="h3_info">E-mail:</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section">
-            <div class="top-5">
-                <canvas class="show_result_canvas" id="no6">
-
-                </canvas>
-                <div class="section">
-                    <div class="info">
-                        <h3 class="h3_info">Name:</h3>
-                        <h3 class="h3_info">E-mail:</h3>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-    </div>
 
 </div>
 
+</div>
 <footer>Made By CZD</footer>
 
 </body>

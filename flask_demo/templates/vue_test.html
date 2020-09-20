@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../static/index.css?v=0.2.0">
+</head>
+<body>
+<style type="text/css">
+    [v-cloak] {
+        display: none;
+    }
+</style>
+
+<div id="app" v-cloak>
+    <p>[[message]]</p>
+</div>
+<h2 id="app-3" v-cloak>
+    <p v-cloak>[[msg2]]</p>
+</h2>
+<div id="app-2" v-cloak>
+  <span v-bind:title="message">
+    鼠标悬停几秒钟查看此处动态绑定的提示信息！
+  </span>
+</div>
+
+<form>
+    <input id="input_test">
+    <input id="rad1" type="radio" value=100 v-model="radio_result">
+    <label for="rad1">123</label>
+    <input id="rad2" type="radio" value=200 v-model="radio_result">
+    <label for="rad2">200</label>
+
+    <input type="submit" value="Submit">
+</form>
+<table>
+    <div>
+
+        {% for i in range(6) %}
+            <div class="show_td">
+                <img width="220px" height="100%" src="data:;base64,{{ top6ModelInfo[i]['img_stream'] }}">
+                <label>{{ top6ModelInfo[i]['name'] }}</label>
+            </div>
+        {% endfor %}
+
+
+    </div>
+
+</table>
+
+<div class="result">
+    {% for i in range(6) %}
+        <div class="section">
+            <div class="top-5">
+ <img width="220px" height="100%" src="data:;base64,{{ top6ModelInfo[i]['img_stream'] }}">
+                <div class="info">
+                    <h3 class="h3_info">Name:</h3>
+                    <h3 class="h3_info">E-mail:</h3>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+<script src="../static/vue.js"></script>
+{#<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>#}
+<script type="text/javascript">
+    var test = new Vue({
+        el: '#app',
+        delimiters: ['[[', ']]'],
+        data: {
+            message: 'fuck front'
+        }
+    });
+    var test2 = new Vue({
+        el: '#app-3',
+        delimiters: ['[[', ']]'],
+        data: {
+            msg2: "shit"
+        }
+    });
+    var app2 = new Vue({
+        el: '#app-2',
+        delimiters: ['[[', ']]'],
+        data: {
+            message: '页面加载于 ' + new Date().toLocaleString()
+        }
+    })
+</script>
+
+</body>
+</html>
