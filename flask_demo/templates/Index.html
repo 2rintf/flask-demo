@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" href="../static/index.css?v=0.2.0">
+    <link rel="stylesheet" href="../static/index.css?v=0.3.0">
     <title>Search for Models</title>
     <script src="../static/show_rawImg.js"></script>
     <script src="../static/form_func.js"></script>
@@ -34,12 +34,13 @@
                 <h3 class="func_name">Setting</h3>
                 <div class="container">
                     <div class="setting">
+                        <input type="text" name="isTest" value="10101" hidden="hidden">
                         <h4 class="setting_name">推荐系统运行模式</h4>
                         {#                    <form enctype="multipart/form-data" action="{{ url_for('upload') }}"#}
                         {#                          id="form_1" class="setting_form" style="text-align: match-parent">#}
                         <input type="radio" id="radio_test" name="search_mode" value=1 checked>
                         <label for="radio_test">人脸相似</label>
-                        <input type="radio" name="search_mode" value=2 >人脸语义相似
+                        <input type="radio" name="search_mode" value=2>人脸语义相似
                         <input type="radio" name="search_mode" value=3>综合Mode
                         {#                    </form>#}
                     </div>
@@ -115,13 +116,22 @@
                     <canvas class="show_result_canvas" id="no1" {{ isHidden }}>
                     </canvas>
                     {% if flag==1 %}
-                    <img width="220px" height="100%" src="data:;base64,{{ top6ModelsInfo[i]['img_stream'] }}">
+                        <img width="220px" height="100%" src="data:;base64,{{ top6ModelsInfo[i]['img_stream'] }}">
+
+
+                        <div class="info">
+                            <h3 class="h3_info">Name:
+                                <span class="h3_info_name">{{ top6ModelsInfo[i]['name'].replace("_"," ") }}</span>
+                            </h3>
+                            <h3 class="h3_info">E-mail:</h3>
+                        </div>
+                    {% else %}
+                        <div class="info">
+                            <h3 class="h3_info">Name:</h3>
+                            <h3 class="h3_info">E-mail:</h3>
+                        </div>
                     {% endif %}
 
-                    <div class="info">
-                        <h3 class="h3_info">Name:</h3>
-                        <h3 class="h3_info">E-mail:</h3>
-                    </div>
                 </div>
             </div>
         {% endfor %}

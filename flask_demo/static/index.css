@@ -25,7 +25,7 @@ body {
     flex-grow: 1;
     width: 35%;
     display: flex;
-    max-height: 300px;
+    max-height: 350px;
 }
 
 .container {
@@ -59,7 +59,7 @@ body {
 
 .top-5 {
     /*display: -webkit-box;*/
-    /*display: flex;*/
+    display: grid;
 }
 
 .func_name {
@@ -157,10 +157,16 @@ form {
 }
 
 .h3_info {
-    font-family: Microsoft YaHei UI Light, sans-serif;
+    font-family: Microsoft YaHei UI, sans-serif;
     margin: .5rem .5rem;
     text-align: left;
     font-size: 15px;
+}
+.h3_info_name{
+    font-family: Microsoft YaHei UI Light, sans-serif;
+    margin: .5rem .5rem;
+    text-align: left;
+    font-size: 13px;
 }
 
 footer {

@@ -36,16 +36,13 @@ count = 0
 for fn in file_name:
     real_path = os.path.join(path,fn)
 
-    # FA_result = FA_detect(model,real_path)
-    # print(FA_result)
-    # # todo: face attribute into DATABASE.
-    #
-    # exit(0)
+
 
     image = face_recognition.load_image_file(real_path)
     face_locations = face_recognition.face_locations(image,model="cnn",number_of_times_to_upsample=1)
 
     if len(face_locations)==0:
+        # 放大一倍再检测一次，防止
         face_locations = face_recognition.face_locations(image,
                                                          model="cnn",
                                                          number_of_times_to_upsample=2)
@@ -58,6 +55,13 @@ for fn in file_name:
     elif len(face_locations)>1:
         print("{%s}. More than 1 face detected."%(real_path))
         continue
+
+    FA_result = FA_detect(model,real_path)
+    print(FA_result)
+    # todo: face attribute into DATABASE.
+
+    exit(0)
+
 
     encoding = face_recognition.face_encodings(image,face_locations,model="large")
     for i in range(len(face_locations)):

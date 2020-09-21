@@ -25,7 +25,7 @@ from .face_attribute_net.face_attribute import get_FA_model, FA_detect
 from .face_detection.face_detection_func import calFaceDistance,faceEncodingPipeline,getTop6FaceComparision
 
 
-db.session.query(EncodingTable).filter(EncodingTable.id==1582)
+# db.session.query(EncodingTable).filter(EncodingTable.id==1582)
 # name = ModelInfo.query.filter_by(name='pbt')
 # # get num of SELECT result.
 # print(name.count())
@@ -50,7 +50,7 @@ test_user = {'name': 'test_user',
 # 创建实例结束
 
 
-# app.config['IS_FA_NET_USED'] = True
+app.config['IS_FA_NET_USED'] = True
 
 if app.config['IS_FA_NET_USED']:
     try:
@@ -94,6 +94,7 @@ def index():
 
         search_mode = request.form.get('search_mode')
         return_num = request.form.get('return_num')
+        print(request.form.get('isTest'))
         print("search_mode: "+search_mode)
         print("return_num: "+return_num)
 
